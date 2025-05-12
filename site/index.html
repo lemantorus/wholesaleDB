@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wholesale DB Interface</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Интерфейс базы данных WholesaleDB</h1>
+
+        <div class="controls">
+            <div class="control-group">
+                <h2>Запросы данных</h2>
+                <label for="select-view">Выберите представление:</label>
+                <select id="select-view">
+                    <option value="">-- Представления --</option>
+                </select>
+                <button id="btn-fetch-view">Показать данные представления</button>
+            </div>
+
+            <div class="control-group">
+                <label for="select-table">Выберите таблицу:</label>
+                <select id="select-table">
+                    <option value="">-- Таблицы --</option>
+                </select>
+                <button id="btn-fetch-table">Показать данные таблицы</button>
+            </div>
+            
+            <div class="control-group">
+                <h3>Прочие запросы:</h3>
+                <label for="customer-id-history">ID Клиента для истории заказов:</label>
+                <input type="number" id="customer-id-history" value="1">
+                <button id="btn-fetch-customer-history">История заказов клиента</button>
+            </div>
+            
+            <div class="control-group">
+                <label for="low-stock-warehouse-id">Товары с низким запасом (ID Склада, необязательно):</label>
+                <input type="number" id="low-stock-warehouse-id" placeholder="Все склады">
+                <label for="low-stock-threshold">Порог % (необязательно):</label>
+                <input type="number" id="low-stock-threshold" step="0.01" placeholder="100.00">
+                <button id="btn-fetch-low-stock">Показать товары с низким запасом</button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="controls">
+            <h2>Управление заказами</h2>
+            <div class="control-group" id="create-order-section">
+                <h3>1. Создать новый заказ</h3>
+                <label for="new-order-customer-id">ID Клиента <span class="required">*</span>:</label>
+                <input type="number" id="new-order-customer-id" required>
+
+                <label for="new-order-employee-id">ID Сотрудника <span class="required">*</span>:</label>
+                <input type="number" id="new-order-employee-id" required>
+
+                <label for="new-order-delivery-date">Требуемая дата доставки (опц.):</label>
+                <input type="date" id="new-order-delivery-date">
+
+                <label for="new-order-shipping-address">Адрес доставки (опц.):</label>
+                <input type="text" id="new-order-shipping-address" style="width: 300px;" placeholder="Если пусто, используется адрес клиента">
+
+                <button id="btn-create-order">Создать заказ</button>
+                <p id="create-order-message" class="message-area"></p>
+                <p>Текущий созданный/выбранный Order ID: <strong id="current-order-id-display">нет</strong></p>
+            </div>
+
+            <div class="control-group" id="add-item-section">
+                <h3>2. Добавить товар в текущий заказ</h3>
+                <p>Сначала создайте заказ выше или введите существующий ID заказа ниже.</p>
+                <label for="add-item-order-id">ID Заказа для добавления товара <span class="required">*</span>:</label>
+                <input type="number" id="add-item-order-id" required>
+
+                <label for="add-item-product-id">ID Товара <span class="required">*</span>:</label>
+                <input type="number" id="add-item-product-id" required>
+                <!-- Для улучшения: <select id="add-item-product-id-select"></select> -->
+
+                <label for="add-item-warehouse-id">ID Склада <span class="required">*</span>:</label>
+                <input type="number" id="add-item-warehouse-id" required>
+                <!-- Для улучшения: <select id="add-item-warehouse-id-select"></select> -->
+
+                <label for="add-item-quantity">Количество <span class="required">*</span>:</label>
+                <input type="number" id="add-item-quantity" min="1" value="1" required>
+
+                <button id="btn-add-item-to-order">Добавить товар в заказ</button>
+                <p id="add-item-message" class="message-area"></p>
+            </div>
+        </div>
+        
+        <hr>
+
+        <div id="data-display">
+            <h2>Результаты запросов:</h2>
+            <table id="results-table">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+            <p id="message-area" class="message-area"></p> <!-- Сообщение для результатов таблиц -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
